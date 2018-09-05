@@ -1,0 +1,38 @@
+nt cont = 0;
+void setup() {
+  Serial.begin(9600);
+  pinMode(A0, INPUT_PULLUP);
+  pinMode(13, OUTPUT);
+}
+int botao = 0;
+int estado = 0;
+void loop() {
+  switch(estado){
+    case 0:
+      if(!digitalRead(A0)){
+        estado = 1;
+      }
+      delay(100);
+      break;
+    case 1:
+      if(digitalRead(A0)){
+        estado = 0;
+        Serial.print("Cont = ");
+        Serial.println(cont);
+        cont++;
+      }
+      delay(100);
+      break;
+    
+  }
+
+  if(Serial.available() > 0){ 
+     char incomingByte = Serial.read();
+     if(incomingByte == 'r' || incomingByte == 'R'){
+      digitalWrite(13, HIGH);
+      delay(1000);
+      digitalWrite(13, LOW);
+      cont = 0;
+     }
+  }
+}
