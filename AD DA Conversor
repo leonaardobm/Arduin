@@ -1,0 +1,41 @@
+void setup() {
+  Serial.begin(9600);
+  pinMode(A5, INPUT); //potenciometro
+  pinMode(3, OUTPUT); //Led
+  pinMode(A0, INPUT_PULLUP); //botao
+}
+int valor_lido = 0;
+int valor_escrito = 0;
+int estado = 0;
+int offset = 0;
+int valor_final = 0;
+void loop() {
+
+   switch(estado){
+     case 0:
+       if(!digitalRead(A0)) estado = 1;
+       delay(100); //espera um pouco
+       break;
+     case 1:
+       if(digitalRead(A0)){ estado = 0; offset = valor_escrito;}
+       delay(100); //espera um pouco
+       break;
+   }
+  
+  valor_lido = analogRead(A5);
+  valor_escrito = map(valor_lido,offset,1025,0,255); // ou valor_lido/4
+  if(valor_escrito < 0){
+    valor_escrito = 0;
+  }
+  valor_final = -(offset-valor_escrito);
+  if(valor_final < 0){
+    valor_final = 0;
+  }
+  
+  Serial.print(valor_escrito);
+  Serial.print(" / ");
+  Serial.print(valor_final);
+  Serial.print(" / ");
+  Serial.println(offset);
+  analogWrite(3, valor_final);
+}
