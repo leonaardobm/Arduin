@@ -1,0 +1,95 @@
+char letra;
+char vector[100];
+char M;
+int x =0;
+int y = 0;
+void setup() {
+  pinMode(12, OUTPUT); //LED
+  pinMode(A1, INPUT_PULLUP);// BOTAO
+  Serial.begin(9600);
+  Serial.available();
+}
+
+void loop() {
+  if(Serial.available() > 0 && x <100){
+    M = Serial.read();
+    
+       vector[x] = M ;
+       Serial.println(M);
+    x++;
+    Serial.println("incrementou");
+  }
+   if(!digitalRead(A1)){
+    delay(50);
+    
+   Serial.println("apertou o botao.");
+   while(y < x){
+   if(y < x){
+    y++;
+   }
+    if(vector[y] == 'A'){
+  
+   //A
+   
+    digitalWrite(12, HIGH);   
+    delay(100);
+    digitalWrite(12, LOW);
+    delay(200);
+    digitalWrite(12, HIGH);
+    delay(300);
+    digitalWrite(12, LOW);  
+    delay(500);
+    }
+  
+    //E
+  
+    if(vector[y] == 'E'){
+      digitalWrite(12,HIGH);
+      delay(100);
+      digitalWrite(12,LOW);
+      delay(500);
+    }
+  
+    //I
+  
+    if(vector[y] == 'I'){
+      for(int x=0; x<2; x++){
+    
+      digitalWrite(12,HIGH);
+      delay(100);
+      digitalWrite(12,LOW);
+      delay(200);
+      }
+      delay(500);
+    }
+  
+    //O
+  
+    if(vector[y] == 'O'){
+  
+      for (int x=0; x<3; x++) {
+       digitalWrite(12, HIGH);
+       delay(300);
+       digitalWrite(12, LOW);
+       delay(200);
+      }
+      delay(500);
+    }
+  
+     //U
+  
+    if(vector[y] == 'U'){
+      for (int x=0; x<2; x++) {
+       digitalWrite(12, HIGH);
+       delay(100);
+       digitalWrite(12, LOW);
+       delay(200);
+      }
+      digitalWrite(12, HIGH);
+      delay(300);
+      digitalWrite(12, LOW);
+      delay(500);
+    }
+    }
+}
+}
