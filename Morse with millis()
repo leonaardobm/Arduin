@@ -1,0 +1,56 @@
+unsigned long tempoinicial;
+int x = 3000;
+int tempoatual;
+
+int estado = 1;
+
+void setup() {
+  pinMode(A1,INPUT_PULLUP);// BOTAO 
+  pinMode(12, OUTPUT);// LED
+  Serial.begin(9600);
+}
+
+void loop() {
+  if(estado == 1){
+    if(!digitalRead(A1)){
+      digitalWrite(12,HIGH);
+      tempoinicial = millis ();
+      estado = 2;
+      delay(20);
+    }
+  }
+  
+
+  if(estado == 2){
+    tempoatual = millis();
+    if(tempoatual - tempoinicial >= x){
+      digitalWrite(12,LOW);
+      estado = 4;
+    }
+    if(!(!digitalRead(A1))){
+      estado = 3;
+      delay(20);
+    }
+  }
+
+  if(estado == 3){
+    tempoatual = millis ();
+    if(!digitalRead(A1)){
+      digitalWrite(12,LOW);
+      delay(20);
+      estado = 4;
+    }
+  }
+    if(tempoatual - tempoinicial >= x){
+      digitalWrite(12,LOW);
+      estado = 4;
+    }
+   
+
+   if(estado == 4){
+    if(!(!digitalRead(A1))){
+      delay(20);
+      estado = 1;
+    }
+    }
+  }
