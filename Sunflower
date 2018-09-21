@@ -1,0 +1,27 @@
+#include<Servo.h>
+
+int pinServo=9;
+int angulo=0;
+int i=0;
+int valor_lido, valor_escrito, memoria;
+Servo s;
+
+
+void setup() {
+  Serial.begin(9600);
+  s.attach(9);
+}
+
+void loop() {
+  valor_lido=analogRead(A0);
+  memoria=valor_lido;
+  valor_escrito=map(valor_lido,0,1023,0,180);
+  s.write(valor_escrito-2);
+  valor_lido=analogRead(A0);
+  if(valor_lido<memoria){
+    s.write(valor_escrito+4);
+  }    
+    else if (valor_lido>memoria){
+      s.write(valor_escrito-2);
+    }
+}
