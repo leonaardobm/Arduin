@@ -1,2 +1,2 @@
-# Arduin
-Repo for some Arduin codes
+# Arduino
+Repo for some Arduino codes
